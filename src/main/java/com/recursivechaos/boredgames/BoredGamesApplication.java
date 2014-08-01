@@ -10,6 +10,11 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+
 import com.recursivechaos.boredgames.auth.ExampleAuthenticator;
 import com.recursivechaos.boredgames.cli.RenderCommand;
 import com.recursivechaos.boredgames.core.Game;
@@ -39,7 +44,7 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
 
     @Override
     public String getName() {
-        return "hello-world";
+        return "boredgamesapi";
     }
 
     @Override
@@ -56,7 +61,8 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
         bootstrap.addBundle(new ViewBundle());
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void run(BoredGamesConfiguration configuration,
                     Environment environment) throws ClassNotFoundException {
         final PersonDAO dao = new PersonDAO(hibernateBundle.getSessionFactory());
@@ -73,5 +79,9 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
         environment.jersey().register(new PeopleResource(dao));
         environment.jersey().register(new PersonResource(dao));
         environment.jersey().register(new GameResource(gameDao));
+        
+        environment.getApplicationContext()
+        	.addFilter((Class<? extends Filter>) CrossDomainFilter.class, "/*", 
+        	EnumSet.of(DispatcherType.REQUEST, DispatcherType.ERROR));
     }
 }

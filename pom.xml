@@ -6,11 +6,10 @@
 		<maven>3.0.0</maven>
 	</prerequisites>
 
-	<groupId>io.dropwizard</groupId>
-	<artifactId>dropwizard-example</artifactId>
+	<groupId>com.recursivechaos</groupId>
 	<!--<version>0.7.1-SNAPSHOT</version> -->
-	<version>0.6.2</version>
-	<name>Dropwizard Example Application</name>
+	<version>0.0.1</version>
+	<name>boredgames api</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -222,4 +221,5 @@
 			<version>5.1.31</version>
 		</dependency>
 	</dependencies>
+	<artifactId>boredgamesapi</artifactId>
 </project>
