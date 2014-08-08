@@ -33,5 +33,7 @@ local.properties
 
 # Private files
 *.private.*
-*sources.jar
-original*.jar
+
+# Non-dist jars
+*.jar
+!boredgamesapi.jar

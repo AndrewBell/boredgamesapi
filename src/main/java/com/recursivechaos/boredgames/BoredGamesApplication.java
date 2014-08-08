@@ -2,7 +2,6 @@ package com.recursivechaos.boredgames;
 
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
-import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -15,7 +14,6 @@ import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 
-import com.recursivechaos.boredgames.auth.ExampleAuthenticator;
 import com.recursivechaos.boredgames.cli.RenderCommand;
 import com.recursivechaos.boredgames.core.Game;
 import com.recursivechaos.boredgames.core.Template;
@@ -25,8 +23,6 @@ import com.recursivechaos.boredgames.health.TemplateHealthCheck;
 import com.recursivechaos.boredgames.resources.GameResource;
 import com.recursivechaos.boredgames.resources.HelloWorldResource;
 import com.recursivechaos.boredgames.resources.PeopleResource;
-import com.recursivechaos.boredgames.resources.PersonResource;
-import com.recursivechaos.boredgames.resources.ProtectedResource;
 import com.recursivechaos.boredgames.resources.ViewResource;
 
 public class BoredGamesApplication extends Application<BoredGamesConfiguration> {
@@ -71,13 +67,9 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
 
         environment.healthChecks().register("template", new TemplateHealthCheck(template));
 
-        environment.jersey().register(new BasicAuthProvider<>(new ExampleAuthenticator(),
-                                                              "SUPER SECRET STUFF"));
         environment.jersey().register(new HelloWorldResource(template));
         environment.jersey().register(new ViewResource());
-        environment.jersey().register(new ProtectedResource());
         environment.jersey().register(new PeopleResource(dao));
-        environment.jersey().register(new PersonResource(dao));
         environment.jersey().register(new GameResource(gameDao));
         
         environment.getApplicationContext()
