@@ -57,8 +57,7 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
         bootstrap.addBundle(new ViewBundle());
     }
 
-    @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public void run(BoredGamesConfiguration configuration,
                     Environment environment) throws ClassNotFoundException {
         final PersonDAO dao = new PersonDAO(hibernateBundle.getSessionFactory());
