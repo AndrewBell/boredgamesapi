@@ -66,6 +66,7 @@ public class BoredGamesApplication extends Application<BoredGamesConfiguration> 
 
         environment.healthChecks().register("template", new TemplateHealthCheck(template));
 
+
         environment.jersey().register(new HelloWorldResource(template));
         environment.jersey().register(new ViewResource());
         environment.jersey().register(new PeopleResource(dao));
